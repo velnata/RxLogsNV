@@ -15,7 +15,6 @@ import com.mooveit.library.Fakeit
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_hourly_logs_test.*
 import java.util.*
 
 
@@ -64,7 +63,8 @@ class HourlyLogsTest : AppCompatActivity() {
                                 Thread.currentThread().name
                             )
 
-                            events?.text = "New log file created: " + it.data
+                            findViewById<androidx.appcompat.widget.AppCompatTextView>(R.id.events)?.text =
+                                "New log file created: " + it.data
                         }
                         EventTypes.NEW_EVENT_DIRECTORY_CREATED -> {
                             PLog.logThis(
@@ -103,7 +103,8 @@ class HourlyLogsTest : AppCompatActivity() {
         )
         logsPrinted++
 
-        status?.text = "Logs Printed: $logsPrinted\nCurrent Time: $currentTime"
+        findViewById<androidx.appcompat.widget.AppCompatTextView>(R.id.status)?.text =
+            "Logs Printed: $logsPrinted\nCurrent Time: $currentTime"
     }
 
     private var timeRunner: Runnable = object : Runnable {

@@ -19,15 +19,10 @@ import com.blackbox.plog.pLogs.PLog
 import com.blackbox.plog.pLogs.exporter.ExportType
 import com.blackbox.plog.pLogs.models.LogLevel
 import com.blackbox.plog.pLogs.models.LogType
-import com.mooveit.library.BuildConfig
 import com.mooveit.library.Fakeit
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -119,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             )
         }*/
 
-        run_test.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.run_test).setOnClickListener {
             startActivity(Intent(this, HourlyLogsTest::class.java))
         }
     }
@@ -135,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         val booksLogs = PLog.getLoggerFor("Books")
 
         //Will log to PLogs
-        log_plog_event.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.log_plog_event).setOnClickListener {
 
             //This will take care of putting logged data to current time & date's file
             PLog.logThis(
@@ -147,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Will Log to custom data logs, in Log File name & path provided in Builder
-        log_data_log_event.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.log_data_log_event).setOnClickListener {
 
             val dataToLog = "Book: " + Fakeit.book().title() + "\n"
             booksLogs?.appendToFile("Book: $dataToLog")
@@ -162,40 +157,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Will delete all Logs
-        delete.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.delete).setOnClickListener {
             clearLogs()
         }
 
         //Will export PLogs
-        export_plogs.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.export_plogs).setOnClickListener {
             exportPLogs()
         }
 
         //Will Export custom data log
-        export_data_logs.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.export_data_logs).setOnClickListener {
             exportDataLogs()
         }
 
 
         //Will print logged data in PLogs
-        print_plogs_hour.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.print_plogs_hour).setOnClickListener {
             printPLogs(ExportType.LAST_HOUR, "ERROR")
         }
 
-        print_plogs_day.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.print_plogs_day).setOnClickListener {
             printPLogs(ExportType.TODAY, "ERROR")
         }
 
-        print_all.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.print_all).setOnClickListener {
             printPLogs(ExportType.ALL, "ERROR")
         }
 
         //Will print logged data in DataLogs
-        print_data_logs.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.print_data_logs).setOnClickListener {
             printDataLogs()
         }
 
-        print_error.setOnClickListener {
+        findViewById<android.widget.Button>(R.id.print_error).setOnClickListener {
             printException()
         }
     }
@@ -378,7 +373,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun listenForInputText() {
-        editText?.addTextChangedListener(object : TextWatcher {
+        findViewById<androidx.appcompat.widget.AppCompatEditText>(R.id.editText)
+            ?.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(p0: Editable?) {
                 PLog.logThis(_tag, "afterTextChanged", p0.toString(), LogLevel.INFO)
